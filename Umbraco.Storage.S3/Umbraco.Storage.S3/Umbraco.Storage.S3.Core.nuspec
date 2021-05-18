@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Our.Umbraco.FileSystemProviders.S3.Core</id>
-    <version>8.1.0</version>
+    <id>CitadelGroup.Umbraco.FileSystemProviders.S3.Core</id>
+    <version>8.2.0</version>
     <title>$title$</title>
-    <authors>Elijah Glover, Neil Gaietto, Danny Quarton</authors>
-    <owners>Elijah Glover, Neil Gaietto, Danny Quarton</owners>
-    <licenseUrl>https://github.com/DannerrQ/Umbraco-S3-Provider</licenseUrl>
-    <projectUrl>https://github.com/DannerrQ/Umbraco-S3-Provider</projectUrl>
+    <authors>Elijah Glover, Neil Gaietto, Danny Quarton, Damien Rider</authors>
+    <owners>Elijah Glover, Neil Gaietto, Danny Quarton, Damien Rider</owners>
+    <licenseUrl>https://github.com/kingdamo/Umbraco-S3-Provider</licenseUrl>
+    <projectUrl>https://github.com/kingdamo/Umbraco-S3-Provider</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Base package for AWS S3 Umbraco providers. Required by Umbraco.Storage.S3.Forms and Umbraco.Storage.S3.Media</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2020</copyright>
+    <copyright>Copyright 2021</copyright>
     <tags>Umbraco Aws S3 Provider</tags>
     <dependencies>
       <dependency id="AWSSDK.Core" version="3.3.103.29" />

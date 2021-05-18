@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Our.Umbraco.FileSystemProviders.S3.Media</id>
-    <version>8.1.1</version>
+    <id>CitadelGroup.Umbraco.FileSystemProviders.S3.Media</id>
+    <version>8.2.0</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://github.com/DannerrQ/Umbraco-S3-Provider</licenseUrl>
-    <projectUrl>https://github.com/DannerrQ/Umbraco-S3-Provider</projectUrl>
+    <licenseUrl>https://github.com/kingdamo/Umbraco-S3-Provider</licenseUrl>
+    <projectUrl>https://github.com/kingdamo/Umbraco-S3-Provider</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>AWS S3 Filesystem provider for Umbraco media items</description>
-    <copyright>Copyright 2020</copyright>
+    <copyright>Copyright 2021</copyright>
     <tags>Umbraco Aws S3 Provider Media</tags>
     <dependencies>
-      <dependency id="Our.Umbraco.FileSystemProviders.S3.Core" version="8.1.0" />
+      <dependency id="CitadelGroup.Umbraco.FileSystemProviders.S3.Core" version="8.1.0" />
     </dependencies>
   </metadata>
 </package>
