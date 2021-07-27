@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CitadelGroup.Umbraco.FileSystemProviders.S3.Core</id>
-    <version>8.2.0</version>
+    <version>8.4.0</version>
     <title>$title$</title>
     <authors>Elijah Glover, Neil Gaietto, Danny Quarton, Damien Rider</authors>
     <owners>Elijah Glover, Neil Gaietto, Danny Quarton, Damien Rider</owners>
@@ -14,8 +14,8 @@
     <copyright>Copyright 2021</copyright>
     <tags>Umbraco Aws S3 Provider</tags>
     <dependencies>
-      <dependency id="AWSSDK.Core" version="3.3.103.29" />
-      <dependency id="AWSSDK.S3" version="3.3.104.17" />
+      <dependency id="AWSSDK.Core" version="3.7.0.44" />
+      <dependency id="AWSSDK.S3" version="3.7.1.14" />
       <dependency id="UmbracoCms.Core" version="8.1.0" />
     </dependencies>
   </metadata>

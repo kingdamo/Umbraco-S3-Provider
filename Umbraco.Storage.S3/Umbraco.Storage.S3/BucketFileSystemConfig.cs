@@ -16,6 +16,10 @@ namespace Umbraco.Storage.S3
 
         public ServerSideEncryptionMethod ServerSideEncryptionMethod { get; set; }
 
+        public bool CacheEnabled { get; set; }
+
+        public int CacheMinutes { get; set; }
+
         public bool DisableVirtualPathProvider { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace Umbraco.Storage.S3.Media
                 return base.GetFile(virtualPath);
 
             var fileSystemPath = RemovePathPrefix(path);
-            return new FileSystemVirtualFile(virtualPath, () => _fileSystem.Value.OpenFile(fileSystemPath));
+            return new FileSystemVirtualFile(virtualPath, _fileSystem.Value.GetLastModified(virtualPath), () => _fileSystem.Value.OpenFile(fileSystemPath));
         }
 
         private string RemovePathPrefix(string virtualPath)

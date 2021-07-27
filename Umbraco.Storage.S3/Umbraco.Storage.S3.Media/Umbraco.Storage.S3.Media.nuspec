@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CitadelGroup.Umbraco.FileSystemProviders.S3.Media</id>
-    <version>8.2.0</version>
+    <version>8.4.0</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
     <licenseUrl>https://github.com/kingdamo/Umbraco-S3-Provider</licenseUrl>
@@ -12,7 +12,7 @@
     <copyright>Copyright 2021</copyright>
     <tags>Umbraco Aws S3 Provider Media</tags>
     <dependencies>
-      <dependency id="CitadelGroup.Umbraco.FileSystemProviders.S3.Core" version="8.1.0" />
+      <dependency id="CitadelGroup.Umbraco.FileSystemProviders.S3.Core" version="8.4.0" />
     </dependencies>
   </metadata>
 </package>

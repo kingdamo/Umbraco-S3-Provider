@@ -240,8 +240,13 @@ namespace Umbraco.Storage.S3
             {
                 var persistedStream = FileCacheProvider.Resolve(path);
                 if (persistedStream != null)
+                {
+                    Logger.Info(typeof(BucketFileSystem), "Loading {path} from cache", path);
                     return persistedStream;
+                }
             }
+
+            Logger.Info(typeof(BucketFileSystem), "Loading {path} from S3", path);
 
             var request = new GetObjectRequest
             {
@@ -260,7 +265,10 @@ namespace Umbraco.Storage.S3
                 stream.Seek(0, SeekOrigin.Begin);
 
             if (FileCacheProvider != null)
+            {
+                Logger.Info(typeof(BucketFileSystem), "Persisting {path} to cache", path);
                 FileCacheProvider.Persist(path, stream);
+            }
 
             return stream;
         }

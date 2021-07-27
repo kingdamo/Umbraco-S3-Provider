@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using Amazon.S3;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
@@ -19,24 +20,28 @@ namespace Umbraco.Storage.S3.Media
         {
 
             var bucketName = ConfigurationManager.AppSettings[$"{AppSettingsKey}:BucketName"];
-            if (bucketName != null)
-            {
-                var config = CreateConfiguration();
+            
+            if (bucketName == null) return;
 
-                composition.RegisterUnique(config);
-                composition.Register<IMimeTypeResolver>(new DefaultMimeTypeResolver());
+            var config = CreateConfiguration();
 
-                composition.SetMediaFileSystem((f) => new BucketFileSystem(
-                    config: config,
-                    mimeTypeResolver: f.GetInstance<IMimeTypeResolver>(),
-                    fileCacheProvider: null,
-                    logger: f.GetInstance<ILogger>(),
-                    s3Client: new AmazonS3Client(Amazon.RegionEndpoint.GetBySystemName(config.Region))
-                ));
+            composition.RegisterUnique(config);
+            composition.Register<IMimeTypeResolver>(new DefaultMimeTypeResolver());
 
-                composition.Components().Append<BucketMediaFileSystemComponent>();
+            if(config.CacheEnabled)
+                composition.Register<IFileCacheProvider>(new FileSystemCacheProvider(TimeSpan.FromMinutes(config.CacheMinutes),"~/App_Data/S3Cache/Media/"));
+            else
+                composition.Register<IFileCacheProvider>(null);
 
-            }
+            composition.SetMediaFileSystem((f) => new BucketFileSystem(
+                config: config,
+                mimeTypeResolver: f.GetInstance<IMimeTypeResolver>(),
+                fileCacheProvider: f.GetInstance<IFileCacheProvider>(),
+                logger: f.GetInstance<ILogger>(),
+                s3Client: new AmazonS3Client(Amazon.RegionEndpoint.GetBySystemName(config.Region))
+            ));
+
+            composition.Components().Append<BucketMediaFileSystemComponent>();
 
         }
 
@@ -47,7 +52,10 @@ namespace Umbraco.Storage.S3.Media
             var bucketPrefix = ConfigurationManager.AppSettings[$"{AppSettingsKey}:MediaPrefix"];
             var region = ConfigurationManager.AppSettings[$"{AppSettingsKey}:Region"];
             var fileACL = ConfigurationManager.AppSettings[$"{AppSettingsKey}:FileACL"];
+            var cacheMinutes = ConfigurationManager.AppSettings[$"{AppSettingsKey}:CacheMinutes"];
+
             bool.TryParse(ConfigurationManager.AppSettings[$"{AppSettingsKey}:DisableVirtualPathProvider"], out var disableVirtualPathProvider);
+            bool.TryParse(ConfigurationManager.AppSettings[$"{AppSettingsKey}:CacheEnabled"], out var cacheEnabled);
 
             if (string.IsNullOrEmpty(bucketName))
                 throw new ArgumentNullOrEmptyException("BucketName", $"The AWS S3 Bucket File System (Media) is missing the value '{AppSettingsKey}:BucketName' from AppSettings");
@@ -62,7 +70,12 @@ namespace Umbraco.Storage.S3.Media
                 throw new ArgumentNullOrEmptyException("BucketHostname", $"The AWS S3 Bucket File System (Media) is missing the value '{AppSettingsKey}:BucketHostname' from AppSettings");
 
             if (string.IsNullOrEmpty(fileACL))
-                throw new ArgumentNullOrEmptyException("FileACL", $"The AWS S3 Bucket File System (Forms) is missing the value '{AppSettingsKey}:FileACL' from AppSettings");
+                throw new ArgumentNullOrEmptyException("FileACL", $"The AWS S3 Bucket File System (Media) is missing the value '{AppSettingsKey}:FileACL' from AppSettings");
+
+            if (string.IsNullOrEmpty(cacheMinutes))
+                throw new ArgumentNullOrEmptyException("CacheMinutes", $"The AWS S3 Bucket File System (Media) is missing the value '{AppSettingsKey}:CacheMinutes' from AppSettings");
+            if(!int.TryParse(cacheMinutes, out var minutesToCache))
+                throw new ArgumentOutOfRangeException("CacheMinutes", $"The AWS S3 Bucket File System (Media) value '{AppSettingsKey}:CacheMinutes' is not a valid integer");
 
             return new BucketFileSystemConfig
             {
@@ -72,7 +85,9 @@ namespace Umbraco.Storage.S3.Media
                 Region = region,
                 CannedACL = AclExtensions.ParseCannedAcl(fileACL),
                 ServerSideEncryptionMethod = "",
-                DisableVirtualPathProvider = disableVirtualPathProvider
+                DisableVirtualPathProvider = disableVirtualPathProvider,
+                CacheEnabled = cacheEnabled,
+                CacheMinutes = minutesToCache
             };
         }
     }
