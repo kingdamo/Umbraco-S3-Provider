@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CitadelGroup.Umbraco.FileSystemProviders.S3.Core</id>
-    <version>8.4.0</version>
+    <version>8.4.1</version>
     <title>$title$</title>
     <authors>Elijah Glover, Neil Gaietto, Danny Quarton, Damien Rider</authors>
     <owners>Elijah Glover, Neil Gaietto, Danny Quarton, Damien Rider</owners>
